@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_play_record"
         android:text="show Record" />
-    <com.yy.voice.graph.OscillogramView
+    <com.yy.voice.graph.WaveformView
         android:id="@+id/btn_record_graph"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

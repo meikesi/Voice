@@ -1,7 +1,6 @@
 package com.yy.voice.voicerecord;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -10,12 +9,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 
-import com.yy.voice.graph.OscillogramView;
+import com.yy.voice.graph.WaveformView;
 import com.yy.voice.record.AudioRecordManager;
+import com.yy.voice.soundFile.SoundFile;
+import com.yy.voice.soundFile.SoundFile.InvalidInputException;
 
 public class MainActivity extends Activity {
 
-	private OscillogramView mOscillogramView;
+	private WaveformView mWaveformView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		mOscillogramView = (OscillogramView) findViewById(R.id.btn_record_graph);
+		mWaveformView = (WaveformView) findViewById(R.id.btn_record_graph);
 	}
 
 	/**
@@ -108,31 +109,24 @@ public class MainActivity extends Activity {
 	 * 把音频转化成波形图
 	 */
 	private void doShowGraph() {
-		String rawFilePath = AudioRecordManager.AudioFileTool.getRawFilePath();
+		String rawFilePath = AudioRecordManager.AudioFileTool.getWavFilePath();
 		File rawFile = new File(rawFilePath);
 		if (rawFile.exists()) {
-			int length = (int) rawFile.length();
-			FileInputStream fis = null;
-			try {
-				fis = new FileInputStream(rawFile);
-				byte[] buffer = new byte[length];
-				fis.read(buffer, 0, length);
 
-				mOscillogramView.setPcmData(buffer);
-				mOscillogramView.invalidate();
+			try {
+				SoundFile soundFile = SoundFile.create(rawFilePath, null);
+				mWaveformView.setSoundFile(soundFile);
+
+				mWaveformView.invalidate();
+			} catch (InvalidInputException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
-				if (fis != null) {
-					try {
-						fis.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
 			}
 
 		}
