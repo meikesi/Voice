@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <Button
+        android:id="@+id/btn_start_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Record" />
+    <Button
+        android:id="@+id/btn_stop_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_start_record"
+        android:text="Stop Record" />
+    <Button
+        android:id="@+id/btn_play_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_stop_record"
+        android:text="Play Record" />
+    <Button
+        android:id="@+id/btn_show_graph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_play_record"
+        android:text="show Record" />
+    <com.yy.voice.graph.OscillogramView
+        android:id="@+id/btn_record_graph"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_show_graph" />
+</RelativeLayout>
